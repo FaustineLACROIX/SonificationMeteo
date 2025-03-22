@@ -27,10 +27,10 @@ scale_autumn = 60 # scale  ]5;12]
 scale_spring = 60 # scale  ]12;24]
 scale_summer = 60 # scale  ]24;+inf]
 
-note_duration = [4,2,1,0.5,(1/3),0.25,0.125,0.0625] #ronde, blanche, noire, croche, triollet, double croche, triple croche, quadruple croche
+note_duration = [4, 2, 1, 0.5, (1/3), 0.25, 0.125, 0.0625] #ronde, blanche, noire, croche, triollet, double croche, triple croche, quadruple croche
 
 # generate scale based on the first note
-list_majeur = [2,2,1,2,2,2,1]
+list_majeur = [2, 2, 1, 2, 2, 2, 1]
 def generate_scale(scale, list):
     res = []
     res.append(scale)
@@ -46,15 +46,16 @@ def generate_scale(scale, list):
 def find_closest_value(value, list):
     return min(list, key=lambda note: abs(note - value))
 
-# generate list of data 
-def convert_temperature(list):
-    res = []
+# 1) TEMPERATURE TO SCALE ====================================================
+# generate list of basique scale  
+def convert_temperature(list_temp):
+    list_scale = []
     scale_choosen = []
-    temperature_min = min(list)
-    temperature_max = max(list)
+    temperature_min = min(list_temp)
+    temperature_max = max(list_temp)
 
     # find the correct scale
-    temperature_moy = sum(list)/len(list)
+    temperature_moy = sum(list_temp)/len(list_temp)
 
     if (temperature_moy < 5 ):
         scale_choosen = generate_scale(scale_winter,list_majeur)
@@ -65,7 +66,7 @@ def convert_temperature(list):
     else :
         scale_choosen = generate_scale(scale_summer,list_majeur)
 
-    for temperature in list:
+    for temperature in list_temp:
         # Normalized temperature between 0 and 1
         if (temperature_max == temperature_min):
             normalized_temp = 0.5
@@ -84,27 +85,109 @@ def convert_temperature(list):
         # To add a little bit of random*
         if random.random() < 0.3:
             chosen_note = random.choice(scale_choosen)
-        res.append(chosen_note)
+        list_scale.append(chosen_note)
 
-    return res
+    return list_scale
 
 # temperature_list = [0, 7, 15, 28, 10, 20, 25, 2]
 # notes = convert_temperature(temperature_list)
 # print(notes)
 
-# generate list of duration (modifie duration of the condition_list)
-def convert_rainfall(list,note_duration):
-    pass
-
+#2) CONDITION TO ADD AN OTHER INSTRUMENT =====================================
 # generate list of note with another instrument than for temperature
 # param : list = list of string
-def convert_condition(list,scale):
+def convert_condition(list_condition,scale):
+    for i in range (len(liste_condition)):
+        if (liste_condition[i] == "Soleil"):
+            # violon
+            pass
+        elif (liste_condition[i] == "Nuageux"):
+            # ocrina 79
+            pass
+        elif (liste_condition[i] == "Brouillard"):
+            # crystal 123
+            pass
+        elif (liste_condition[i] == "Pluie"):
+            # drum synth 118
+            pass
+        elif (liste_condition[i] == "Neige"):
+            # harpe 46
+            pass
+        else:
+            # timpani 47
+            pass
     pass
 
+#3) RAINFALL TO SPEED OF DRUM ================================================
+# generate list of duration (modifie duration of the condition_list)
+def convert_rainfall(list_rainfall,note_duration):
+    for i in range(len(list_rainfall)):
+        # peu voir pas de précipitation
+        if list_rainfall < 1:
+            # un coup tous les blanches
+            pass
+
+        #pluie faible
+        elif list_rainfall < 10:
+            # un coup toute les noires
+            pass
+
+        #pluie modéré
+        elif list_rainfall< 30:
+            #un coup toutes les croches
+            pass
+
+        #pluie forte
+        else:
+            #un coup toutes les doubles crocher
+            pass
+    pass
+
+
+#4) WIND TO SPEED OF ... =====================================================
 # generate list of duration 
-def convert_wind(list,note_duration):
+def convert_wind(list_wind,note_duration):
+    for i in range(len(list_wind)):
+        # air presque immobile
+        if list_wind < 5:
+            # une note tous les blanches
+            pass
+
+        #brise ressentie sur la peau
+        elif list_wind < 20:
+            # une note toute les noires
+            pass
+
+        #sensation de vent présent
+        elif list_wind< 50:
+            #une note toutes les croches
+            pass
+
+        #vent fort et rafales
+        else:
+            #une note toutes les doubles crocher
+            pass
     pass
 
+#5) CHORD LINK TO A NOTE =====================================================
 # generate one chord with the note composed of "number" note
 def create_chord(note, number):
     pass
+
+#6) EVERY 3HOURS MAKE A CHORD ================================================
+
+
+#7) CHOOSE DURATION =========================================================
+def duration(list_temp, note_duration):
+    duration_list = [] 
+    for i in range(len(list_temp)):
+        # blanche lors des accords tous les 3h
+        if (i%3 == 0):
+            duration_list.append(note_duration[1])
+        #noir ou plus rapide répété pour que tous dure 1h    
+        else:
+            note_choose = rd.choices( note_duration, weights=[0, 0, 55, 25, 15, 4, 1 ], k=1)
+            for i in range (int(1/note_choose)):
+                duration_list.append(note_choose)
+    return duration_list
+                
