@@ -37,7 +37,7 @@ def fetch(coordinate=[45, -0.5]):
     return the jsonObject response for the api
     """
     x, y = coordinate 
-    url = f"https://api.open-meteo.com/v1/forecast?latitude={x}&longitude={y}&minutely_15=temperature_2m,weather_code,precipitation,wind_speed_10m"
+    url = f"https://api.open-meteo.com/v1/forecast?latitude={x}&longitude={y}&minutely_15=temperature_2m,weather_code,precipitation,wind_speed_10m,direct_radiation,visibility"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
@@ -73,6 +73,17 @@ def get_rainfall(jsonObject):
     """
     return jsonObject.get("minutely_15", {}).get("precipitation", [])
 
+def get_radiation(jsonObject):
+    """
+    return a list with 4 direct radiation values per hour for a all day
+    """
+    return jsonObject.get("minutely_15", {}).get("direct_radiation", [])
+
+def get_visibility(jsonObject):
+    """
+    return a list with 4 visibilities values per hour for a all day
+    """
+    return jsonObject.get("minutely_15", {}).get("visibility", [])
 
 #%% TEST---------------------------------------------------------
 # coord = convert_city_to_coordinate("Bordeaux")
@@ -88,8 +99,14 @@ def get_rainfall(jsonObject):
 # print(wind)
 # rain = get_rainfall(json)
 # print(rain)
+# radiation = get_radiation(json)
+# print(radiation)
+# visibility = get_visibility(json)
+# print(visibility)
 
-# print("Température :",temp , "°C")
-# print("Météo :", weather)
-# print("Vitesse du vent :", wind, "km/h")
-# print("Précipitations :", rain, "mm")
+# # print("Température :",temp , "°C")
+# print("Météo :", weather[30])
+# print("Vitesse du vent :", wind[30], "km/h")
+# print("Précipitations :", rain[30], "mm")
+# print("Radiation :", radiation[30], "W/m^2")
+# print("Visibility :", visibility[30], "m" )
