@@ -147,27 +147,80 @@ def convert_rainfall(list_rainfall,note_duration):
 #4) WIND TO SPEED OF ... =====================================================
 # generate list of duration 
 def convert_wind(list_wind,note_duration):
+    list_duration = []
     for i in range(len(list_wind)):
         # air presque immobile
         if list_wind < 5:
-            # une note tous les blanches
-            pass
+            duration = rd.choices(note_durations, weights=[0, 55, 35, 10, 5, 0, 0, 0], k=1)
+            list_duration.append(duration)
 
         #brise ressentie sur la peau
         elif list_wind < 20:
-            # une note toute les noires
-            pass
+            duration = rd.choices(note_durations, weights=[0, 2, 23, 53, 20, 2, 0, 0], k=1)
+            list_duration.append(duration)
 
         #sensation de vent présent
         elif list_wind< 50:
-            #une note toutes les croches
-            pass
+            duration = rd.choices(note_durations, weights=[0, 0, 2, 11, 22, 50, 15, 0], k=1)
+            list_duration.append(duration)
 
         #vent fort et rafales
         else:
-            #une note toutes les doubles crocher
-            pass
-    pass
+            duration = rd.choices(note_durations, weights=[0, 0, 0, 0, 5, 10, 35, 50], k=1)
+            list_duration.append(duration)
+    return list_duration
+
+
+# generate list of duration 
+def convert_visibility(list_visibility, note_duration):
+    list_duration = []
+    for i in range(len(list_visibility)):
+        # aucune visibilité = fast
+        if list_visibility[i] < 10:
+            duration = rd.choices(note_durations, weights=[0, 0, 0, 0, 5, 10, 35, 50], k=1)
+            list_duration.append(duration)
+
+        # visibilité
+        elif list_visibility[i] < 200:
+            duration = rd.choices(note_durations, weights=[0, 0, 2, 11, 22, 50, 15, 0], k=1)
+            list_duration.append(duration)
+
+        #visibilité réduite
+        elif list_visibility[i] < 500:
+            duration = rd.choices(note_durations, weights=[0, 2, 23, 53, 20, 2, 0, 0], k=1)
+            list_duration.append(duration)
+
+        # visibilité
+        else:
+            duration = rd.choices(note_durations, weights=[0, 55, 35, 10, 5, 0, 0, 0], k=1)
+            list_duration.append(duration)
+        
+    return list_duration
+
+# generate list of duration 
+def convert_radiation(list_radiation,note_duration):
+    list_duration = []
+    for i in range(len(list_radiation)):
+        # lumière diffuse (matin, soir, pas de grand soleil)
+        if list_radiation < 200:
+            duration = rd.choices(note_durations, weights=[0, 55, 35, 10, 5, 0, 0, 0], k=1)
+            list_duration.append(duration)
+
+        # éclairage modéré, rayon de soleil, ciel partiellemnt dégagé
+        elif list_radiation < 700:
+            duration = rd.choices(note_durations, weights=[0, 2, 23, 53, 20, 2, 0, 0], k=1)
+            list_duration.append(duration)
+
+        # soleil présent, lunimosité
+        elif list_radiation < 1000:
+            duration = rd.choices(note_durations, weights=[0, 0, 2, 11, 22, 50, 15, 0], k=1)
+            list_duration.append(duration)
+
+        # lumière intense, plein soleil, midi
+        else:
+            duration = rd.choices(note_durations, weights=[0, 0, 0, 0, 5, 10, 35, 50], k=1)
+            list_duration.append(duration)
+    return list_duration
 
 #5) CHORD LINK TO A NOTE =====================================================
 # generate one chord with the note composed of "number" note
