@@ -1,27 +1,27 @@
 import requests
 
 WEATHER_CODES = {
-    0: "Soleil",
-    1: "Soleil",
+    0: "Ensoleilé",
+    1: "Ensoleilé",
     2: "Nuageux",  # Fusion de "Partiellement nuageux" et "Couvert"
     3: "Nuageux",
-    45: "Brouillard",  # Fusion de Brouillard et Brouillard givrant
-    48: "Brouillard",
-    51: "Pluie",
-    53: "Pluie",
-    55: "Pluie",
-    61: "Pluie",  # Fusion avec averses légères
-    63: "Pluie",  # Fusion avec averses modérées
-    65: "Pluie",  # Fusion avec averses fortes
-    80: "Pluie",
-    81: "Pluie",
-    82: "Pluie",
-    71: "Neige",  
-    73: "Neige",
-    75: "Neige",
-    77: "Neige",
-    95: "Orages",
-    96: "Orages"
+    45: "Brumeux",  # Fusion de Brouillard et Brouillard givrant
+    48: "Brumeux",
+    51: "Pluvieux",
+    53: "Pluvieux",
+    55: "Pluvieux",
+    61: "Pluvieux",  # Fusion avec averses légères
+    63: "Pluvieux",  # Fusion avec averses modérées
+    65: "Pluvieux",  # Fusion avec averses fortes
+    80: "Pluvieux",
+    81: "Pluvieux",
+    82: "Pluvieux",
+    71: "Neigeux",  
+    73: "Neigeux",
+    75: "Neigeux",
+    77: "Neigeux",
+    95: "Orageux",
+    96: "Orageux"
 }
 
 

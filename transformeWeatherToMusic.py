@@ -1,4 +1,4 @@
-import random
+import random as rd
 import numpy as np
 
 from miditoolkit.midi import parser as mid_parser  
@@ -83,9 +83,9 @@ def convert_temperature(list_temp):
         # Find the closest note in the scale
         chosen_note = find_closest_value(interpolated_note,scale_choosen)
 
-        # To add a little bit of random*
-        if random.random() < 0.3:
-            chosen_note = random.choice(scale_choosen)
+        # To add a little bit of random
+        if rd.random() < 0.3:
+            chosen_note = rd.choice(scale_choosen)
         list_scale.append(chosen_note)
 
     return list_scale
@@ -99,19 +99,19 @@ def convert_temperature(list_temp):
 # param : list = list of string
 def convert_condition(list_condition,scale):
     for i in range (len(liste_condition)):
-        if (liste_condition[i] == "Soleil"):
+        if (liste_condition[i] == "Ensoleilé"):
             # violon
             pass
         elif (liste_condition[i] == "Nuageux"):
             # ocrina 79
             pass
-        elif (liste_condition[i] == "Brouillard"):
+        elif (liste_condition[i] == "Brumeux"):
             # crystal 123
             pass
-        elif (liste_condition[i] == "Pluie"):
-            # drum synth 118
+        elif (liste_condition[i] == "Pluvieux"):
+            # drum synth 118 synth pad 8
             pass
-        elif (liste_condition[i] == "Neige"):
+        elif (liste_condition[i] == "Neigeux"):
             # harpe 46
             pass
         else:
@@ -155,17 +155,17 @@ def convert_wind(list_wind,note_duration):
     list_duration = []
     for i in range(len(list_wind)):
         # air presque immobile
-        if list_wind < 5:
+        if list_wind[i] < 5:
             duration = rd.choices(note_durations, weights=[0, 55, 35, 10, 5, 0, 0, 0], k=1)
             list_duration.append(duration)
 
         #brise ressentie sur la peau
-        elif list_wind < 20:
+        elif list_wind[i] < 20:
             duration = rd.choices(note_durations, weights=[0, 2, 23, 53, 20, 2, 0, 0], k=1)
             list_duration.append(duration)
 
         #sensation de vent présent
-        elif list_wind< 50:
+        elif list_wind[i]< 50:
             duration = rd.choices(note_durations, weights=[0, 0, 2, 11, 22, 50, 15, 0], k=1)
             list_duration.append(duration)
 
@@ -207,17 +207,17 @@ def convert_radiation(list_radiation,note_duration):
     list_duration = []
     for i in range(len(list_radiation)):
         # lumière diffuse (matin, soir, pas de grand soleil)
-        if list_radiation < 200:
+        if list_radiation[i] < 200:
             duration = rd.choices(note_durations, weights=[0, 55, 35, 10, 5, 0, 0, 0], k=1)
             list_duration.append(duration)
 
         # éclairage modéré, rayon de soleil, ciel partiellemnt dégagé
-        elif list_radiation < 700:
+        elif list_radiation[i] < 700:
             duration = rd.choices(note_durations, weights=[0, 2, 23, 53, 20, 2, 0, 0], k=1)
             list_duration.append(duration)
 
         # soleil présent, lunimosité
-        elif list_radiation < 1000:
+        elif list_radiation[i] < 1000:
             duration = rd.choices(note_durations, weights=[0, 0, 2, 11, 22, 50, 15, 0], k=1)
             list_duration.append(duration)
 
