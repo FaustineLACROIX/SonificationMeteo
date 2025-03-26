@@ -67,6 +67,7 @@ def convert_temperature(list_temp):
         scale_choosen = generate_scale(scale_summer,list_majeur)
 
     for temperature in list_temp:
+
         # Normalized temperature between 0 and 1
         if (temperature_max == temperature_min):
             normalized_temp = 0.5
@@ -116,33 +117,37 @@ def convert_condition(list_condition,scale):
         else:
             # timpani 47
             pass
+    # retourne tab de 6 notes/accords 
     pass
 
 #3) RAINFALL TO SPEED OF DRUM ================================================
 # generate list of duration (modifie duration of the condition_list)
 def convert_rainfall(list_rainfall,note_duration):
+    list_duree = []
     for i in range(len(list_rainfall)):
         # peu voir pas de précipitation
-        if list_rainfall < 1:
-            # un coup tous les blanches
-            pass
+        if list_rainfall[i] < 1:
+            # proba 70% sur blanche ronde / 20% noir / 10% au dessus
+            list_duree.append(random.choice((note_duration), weigths=[35,35,26,2,2,0,0,0], k=1))
+     
 
         #pluie faible
-        elif list_rainfall < 10:
-            # un coup toute les noires
-            pass
+        elif list_rainfall[i] < 10:
+            # proba 15% ronde pareil blanche, 20% noir, 10% croche et le reste
+            list_duree.append(random.choice((note_duration), weigths=[15,25,35,15,5,5,0,0], k=1))
+           
 
         #pluie modéré
-        elif list_rainfall< 30:
-            #un coup toutes les croches
-            pass
+        elif list_rainfall[i] < 30:
+            # proba 0 ronde 20% blanche, 40%noir, 20%croche
+            list_duree.append(random.choice((note_duration), weigths=[0,5,40,30,10,10,5,0], k=1))
 
         #pluie forte
         else:
-            #un coup toutes les doubles crocher
-            pass
-    pass
-
+            # proba 0 ronde/blanche 10%noire, 20%croche 
+            list_duree.append(random.choice((note_duration), weigths=[0,0,10,20,30,25,10,5], k=1))
+    # retourne tab de duréé (longueur = len(list_rainfall))
+    return list_duree
 
 #4) WIND TO SPEED OF ... =====================================================
 # generate list of duration 
@@ -222,6 +227,7 @@ def convert_radiation(list_radiation,note_duration):
             list_duration.append(duration)
     return list_duration
 
+
 #5) CHORD LINK TO A NOTE =====================================================
 # generate one chord with the note composed of "number" note
 def create_chord(note, number):
@@ -231,6 +237,7 @@ def create_chord(note, number):
 
 
 #7) CHOOSE DURATION =========================================================
+# durée :  pas de blanche et ronde et si croche ou autre note répétter pour faore le temps d'une noire
 def duration(list_temp, note_duration):
     duration_list = [] 
     for i in range(len(list_temp)):
