@@ -6,9 +6,14 @@ import re
     
 class Application(tk.Tk):
     # Création de la fenêtre
-    def __init__(self, callback):
+    def __init__(self):
         super().__init__()
-        self.callback = callback  # Fonction à appeler pour envoyer les données à `main.py`
+        # Variables pour stocker les valeurs saisies
+        self.city = None
+        self.note = None
+        self.freq = None
+        self.instruments = None
+        
         self.title("Interface Météo-Musicale")
         self.geometry("650x500")
 
@@ -58,31 +63,55 @@ class Application(tk.Tk):
 
         # Menus déroulants pour la météo
         self.weather_conditions = ["Ensoleilé", "Nuageux", "Brumeux", "Pluvieux", "Neigeux", "Orageux"]
-        instruments_list = [
-                "Piano acoustique", "Piano électrique 1", "Piano électrique 2", "Clavinet", "Harpsichord", "Clavecin", 
-                "Piano Honky Tonk", "Piano électrique FM", "Célesta", "Glockenspiel", "Boîte à musique", "Vibraphone", 
-                "Marimba", "Xylophone", "Tubular Bells", "Dulcimer", "Orgue à tirettes", "Orgue percussif", "Orgue rock", 
-                "Orgue de théâtre", "Orgue à vent", "Accordéon", "Harmonica", "Bandonéon", "Guitare électrique (jazz)", 
-                "Guitare folk", "Guitare clean", "Guitare palm-mute", "Guitare overdrive", "Guitare distorsion", 
-                "Guitare harmonique", "Basse acoustique", "Basse électrique (doigts)", "Basse électrique (médiator)", 
-                "Basse fretless", "Slap Bass 1", "Slap Bass 2", "Synth Bass 1", "Synth Bass 2", "Violon", "Alto", 
-                "Violoncelle", "Contrebasse", "Tremolo Strings", "Pizzicato Strings", "Harpe", "Timpani", 
-                "Orchestre à cordes 1", "Orchestre à cordes 2", "Chœur Ahh", "Chœur Ooh", "Synth Voice", 
-                "Orchestre synthétique", "Trumpet", "Trombone", "Tuba", "Trompette sourdine", "Cor", 
-                "Cuivres synthétiques", "Trompette synthétique", "Tuba synthétique", "Cuivres synthétiques 2", 
-                "Violon synthétique", "Section de cuivres", "Soprano Saxophone", "Alto Saxophone", "Ténor Saxophone", 
-                "Saxophone baryton", "Hautbois", "Basson", "Clarinette", "Flûte", "Flûte piccolo", "Flûte à bec", 
-                "Flûte de pan", "Bouteille soufflée", "Shakuhachi", "Whistle", "Ocarina", "Guitare acoustique (nylon)", 
-                "Guitare acoustique (acier)", "Guitare électrique (jazz)", "Guitare électrique (clean)", 
-                "Guitare électrique (muted)", "Guitare Overdrive", "Guitare distorsion", "Guitare harmonique", 
-                "Basse acoustique", "Basse électrique (finger)", "Basse électrique (pick)", "Basse fretless", 
-                "Slap Bass 1", "Slap Bass 2", "Synth Bass 1", "Synth Bass 2", "Violon", "Alto", "Violoncelle", 
-                "Contrebasse", "Tremolo Strings", "Pizzicato Strings", "Harpe", "Timpani", "Orchestre à cordes 1", 
-                "Orchestre à cordes 2", "Ensemble choral", "Ensemble choral (voix synth.)", "Orchestre synthétique", 
-                "Ensemble à vent", "Synth-brass 1", "Synth-brass 2", "Saxophone synthétique", "Synth Pad 1 (Fantasia)", 
-                "Synth Pad 2 (Warm)", "Synth Pad 3 (Polysynth)", "Synth Pad 4 (Space)", "Synth Pad 5 (Bow)", 
-                "Synth Pad 6 (Metal)", "Synth Pad 7 (Halo)", "Synth Pad 8 (Sweep)", "Effet pluie", "Soundtrack", 
-                "Crystal", "Atmosphere", "Brightness", "Goblins", "Echoes", "Sci-fi"
+        self.instruments_list = [
+                "Piano acoustique", "Piano électrique 1", "Piano électrique 2",
+                "Clavinet", "Harpsichord", "Clavecin", 
+                "Piano Honky Tonk", "Piano électrique FM", "Célesta",
+                "Glockenspiel", "Boîte à musique", "Vibraphone", 
+                "Marimba", "Xylophone", "Tubular Bells", "Dulcimer",
+                "Orgue à tirettes", "Orgue percussif", "Orgue rock", 
+                "Orgue de théâtre", "Orgue à vent", "Accordéon", "Harmonica",
+                "Bandonéon", "Guitare électrique (jazz)", 
+                "Guitare folk", "Guitare clean", "Guitare palm-mute",
+                "Guitare overdrive", "Guitare distorsion", 
+                "Guitare harmonique", "Basse acoustique",
+                "Basse électrique (doigts)", "Basse électrique (médiator)", 
+                "Basse fretless", "Slap Bass 1", "Slap Bass 2",
+                "Synth Bass 1", "Synth Bass 2", "Violon", "Alto", 
+                "Violoncelle", "Contrebasse", "Tremolo Strings",
+                "Pizzicato Strings", "Harpe", "Timpani", 
+                "Orchestre à cordes 1", "Orchestre à cordes 2",
+                "Chœur Ahh", "Chœur Ooh", "Synth Voice", 
+                "Orchestre synthétique", "Trumpet", "Trombone",
+                "Tuba", "Trompette sourdine", "Cor", 
+                "Cuivres synthétiques", "Trompette synthétique",
+                "Tuba synthétique", "Cuivres synthétiques 2", 
+                "Violon synthétique", "Section de cuivres",
+                "Soprano Saxophone", "Alto Saxophone", "Ténor Saxophone", 
+                "Saxophone baryton", "Hautbois", "Basson", "Clarinette",
+                "Flûte", "Flûte piccolo", "Flûte à bec", 
+                "Flûte de pan", "Bouteille soufflée", "Shakuhachi", "Whistle",
+                "Ocarina", "Guitare acoustique (nylon)", 
+                "Guitare acoustique (acier)", "Guitare électrique (jazz)",
+                "Guitare électrique (clean)", 
+                "Guitare électrique (muted)", "Guitare Overdrive",
+                "Guitare distorsion", "Guitare harmonique", 
+                "Basse acoustique", "Basse électrique (finger)",
+                "Basse électrique (pick)", "Basse fretless", 
+                "Slap Bass 1", "Slap Bass 2", "Synth Bass 1",
+                "Synth Bass 2", "Violon", "Alto", "Violoncelle", 
+                "Contrebasse", "Tremolo Strings", "Pizzicato Strings",
+                "Harpe", "Timpani", "Orchestre à cordes 1", 
+                "Orchestre à cordes 2", "Ensemble choral",
+                "Ensemble choral (voix synth.)", "Orchestre synthétique", 
+                "Ensemble à vent", "Synth-brass 1", "Synth-brass 2",
+                "Saxophone synthétique", "Synth Pad 1 (Fantasia)", 
+                "Synth Pad 2 (Warm)", "Synth Pad 3 (Polysynth)",
+                "Synth Pad 4 (Space)", "Synth Pad 5 (Bow)", 
+                "Synth Pad 6 (Metal)", "Synth Pad 7 (Halo)",
+                "Synth Pad 8 (Sweep)", "Effet pluie", "Soundtrack", 
+                "Crystal", "Atmosphere", "Brightness", "Goblins",
+                "Echoes", "Sci-fi"
             ]
 
 
@@ -103,14 +132,14 @@ class Application(tk.Tk):
             elif weather == "Brumeux":
                 default_instrument = "Crystal"
             elif weather == "Pluvieux":
-                default_instrument = "Synth pad 6"
+                default_instrument = "Synth Pad 6 (Metal)"
             elif weather == "Neigeux":
                 default_instrument = "Harpe"
             else:
                     default_instrument = "Timpani"
                     
             menu_var = tk.StringVar(value=default_instrument)
-            menu = ttk.Combobox(frame, textvariable=menu_var, values=instruments_list, state="readonly", width=27)
+            menu = ttk.Combobox(frame, textvariable=menu_var, values=self.instruments_list, state="readonly", width=27)
             menu.pack(side=tk.RIGHT, expand=True)
                 
             self.create_info_button(frame, f"Choississez un instrument adapté pour jouer l'accompagnement si le temps est {weather}.").pack(side=tk.RIGHT, padx=5)
@@ -133,28 +162,60 @@ class Application(tk.Tk):
         messagebox.showinfo("Information", message)
 
     def submit(self):
-        city = self.city_entry.get()
-        if not city:
+        self.city = self.city_entry.get()
+        if not self.city:
             # Si la ville est vide, afficher un message d'erreur et arrêter la fonction
             messagebox.showerror("Erreur", "Le champ Ville doit être rempli.")
             return 
-        note = self.note_entry.get()
-        print(note)
-        isNote = re.compile(r"^(Do|Re|Mi|Fa|Sol|La|Si)[0-9]$")
-        if not isNote.match(note):
+        self.note = self.note_entry.get()
+
+        isNote = re.compile(r"^(Do|Re|Mi|Fa|Sol|La|Si)#?-?[0-9]$")
+        if not isNote.match(self.note):
             # Si la note de départ est vide,
             #afficher un message d'erreur et arrêter la fonction
             messagebox.showerror("Erreur", "Le champ Note de départ doit être correctement rempli.")
             return
-        freq = self.frequency_var.get()
-        instruments = {weather: self.menus[weather].get() for weather in self.weather_conditions}
-                
-        #print(f"Ville : {city}")
-        #print(f"Note de départ : {note}")
-        #print(f"Fréquence : {freq}")
-        #print("Instruments :", instruments)
-        self.callback(city, note, freq, instruments)
-                
-        #result_label.config(text=f"Ville : {city}\nNote : {note}\nFréquence : {freq}\n" + "\n".join(f"{k} : {v}" for k, v in instruments.items()))
+        self.freq = self.frequency_var.get()
+        self.instruments = {weather: self.instruments_list.index(self.menus[weather].get()) for weather in self.weather_conditions}
+
+        # Fermer la fenêtre Tkinter
+        self.destroy()
+
+    def generat_link_note_MIDI(self):
+        # Liste cyclique des notes
+        notes = ["La", "La#", "Si", "Do", "Do#", "Re", "Re#", "Mi", "Fa", "Fa#", "Sol", "Sol#"]
+
+        # Dictionnaire de conversion note -> numéro MIDI
+        note_to_midi = {}
+        
+        # Génération dynamique des correspondances
+        for midi_num in range(0, 128):  
+            note_index = midi_num % 12  # Boucle sur les 12 notes
+            octave = (midi_num // 12)-5  # Ajuste l’octave en partant de La-5
+            
+            # Ajustement pour que La4 corresponde bien à MIDI 69
+            note_name = f"{notes[note_index]}{octave}"
+            note_to_midi[note_name] = midi_num
+
+        return note_to_midi
+
+    def get_settings(self):
+        """Retourne les valeurs une fois que la fenêtre est fermée."""
+        #parsed city OK
+        #parse note
+        note_to_midi = self.generat_link_note_MIDI()
+        self.note = note_to_midi[self.note]
+
+        #parse freq
+        if (self.freq == "1 note / 15 min"): self.freq = 1
+        elif (self.freq == "1 note / 30 min"): self.freq = 2
+        elif (self.freq == "1 note / 1 h"): self.freq = 4
+        else:
+            self.freq = 8
+
+        #parse instrument OK
+        
+        return [self.city, self.note, self.freq, self.instruments]
+        
 
 
