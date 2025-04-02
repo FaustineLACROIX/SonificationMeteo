@@ -69,7 +69,6 @@ def main():
     melody = convert_temperature(temp, first_note, (personalize.lower() == "oui"))
     melody = add_harmonics_every_3hours(melody)
     duration_melody = duration(melody)
-
     #instruments =
     #sub_melody =
     #sub_duration_melody = 
