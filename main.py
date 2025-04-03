@@ -1,8 +1,10 @@
+import os
 from gtts import gTTS
 from playsound import playsound
 import speech_recognition as sr
 from interface import Application
 from fetchAndParseAPI import *
+
 
 def response(string):
     recognizer = sr.Recognizer()
@@ -18,18 +20,10 @@ def response(string):
         print("Désolé, je n'ai pas compris.")
     except sr.RequestError as e:
         print("Erreur de service ; {0}".format(e))
-
     
-def get_settings(city, note, freq, instruments):
-    print("Note de départ :", note)
-    print("Fréquence :", freq)
-    print("Instruments :", instruments)
-    return city, note, freq, instruments
-
-import os
 
 def main():
-    # partie 1 - introduction et ville souhaité ============================================================
+    # partie 1 - introduction et ville souhaité ==========================================================
     text_intro = "Bonjour"
     suit =", je suis votre assistante Musical Weather. Mon but est de vous guidé pour crée une musique qui exprime la météo du jour. Voulez-vous personalisé cette musique?"
     tts = gTTS(text=text_intro, lang='fr')
@@ -37,11 +31,13 @@ def main():
     playsound("introduction.mp3")
     personalize = response("Dites oui pour personnaliser cette musique, sinon dite non")
 
+    city = "Paris"
+    
     if personalize == "oui" :
-        app = Application(get_settings)
+        app = Application()
         app.mainloop()
-        
-        coord = convert_city_to_coordinate(app[0])
+        city, first_note, freq, list_instruments = app.get_settings()
+        coord = convert_city_to_coordinate(city)
 
     else :
         text_ville = "Vous voulez la météo de qu'elle ville aujourd'hui ?"
@@ -53,14 +49,14 @@ def main():
 
     
         
-    #partie 2 - analyse et traitement des données ===========================================================
+    #partie 2 - analyse et traitement des données ========================================================
     text_traitement = f"D'accord, laissez moi quelques instant je vais vous joué la météo de {city}"
     tts = gTTS(text=text_traitement, lang='fr')
     tts.save("traitement.mp3")
     playsound("traitement.mp3")
 
 
-    #partie 3 - cherches les information sur l'api ==========================================================
+    #partie 3 - cherches les information sur l'api =======================================================
     json_weather = fetch(coord)
     temp = get_temperature(json)
     wind = get_wind_speed(json)
@@ -69,21 +65,16 @@ def main():
     visibility = get_visibility(json)
 
 
-    #partie 4 - analyse des données ==========================================================================
-    if personalize.lower() == "oui" :
-        pass
-        
-        
+    #partie 4 - analyse des données ======================================================================
+    melody = convert_temperature(temp, first_note, (personalize.lower() == "oui"))
+    melody = add_harmonics_every_3hours(melody)
+    duration_melody = duration(melody)
+    #instruments =
+    #sub_melody =
+    #sub_duration_melody = 
+    
 
-    else :
-        # melody = convert_temperature_to_melody(temp)
-        # melody_hour = add_harmonics_every_3hours(melody)
-        # volume = convert_wind_speed_to_volume(wind)
-        # rhythm = convert_rainfall_to_rhythm(rainfall)
-        # stamp = convert_sky_condition_to_stamp(weather_cond)
-        pass
-
-    #partie 5 - génération du fichier MIDI ===================================================================
+    #partie 5 - génération du fichier MIDI ===============================================================
     generate_midi_file(melody, duration_melody, accompaning, duration_accompaning, accompaning_instrument_nb)
     
 
