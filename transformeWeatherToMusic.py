@@ -260,12 +260,7 @@ def convert_radiation(list_radiation,note_duration):
     return list_duration
 
 
-# TO DO
-def convert_snow(list_, note_duration):
-    pass
 
-def convert_storm(list_, note_duration):
-    pass
 
 #5) CHORD LINK TO A NOTE =====================================================
 # generate one chord with the note composed of 5 note
@@ -333,7 +328,7 @@ def find_condition(instru, list_instru):
 
 #9) Fonction : mettre bonne durée pour chaque note de condition méthéo
 
-def condition_duration(list_note, list_instru, data_rainfall, data_wind, data_visibility, data_radiation, data_snow, data_storm):
+def condition_duration(list_note, list_instru, data_rainfall, data_wind, data_visibility, data_radiation):
     list_duration = [] # final duration list
     
     #Apply fonction to convert api data in list of duration
@@ -341,8 +336,8 @@ def condition_duration(list_note, list_instru, data_rainfall, data_wind, data_vi
     list_wind = convert_wind(data_wind, note_duration)
     list_visibility = convert_visibility(data_visibility,note_duration)
     list_rainfall = convert_rainfall(data_rainfall,note_duration)
-    list_snow = convert_snow(data_snow, note_duration)
-    list_storm = convert_storm(data_storm, note_duration)
+    list_snow = convert_rainfall(data_rainfall, note_duration)
+    list_storm = convert_rainfall(data_rainfall, note_duration)
 
 
     for i in range(len(list_note)):
