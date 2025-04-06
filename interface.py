@@ -389,5 +389,8 @@ class Application(tk.Tk):
             self.freq = 8
 
         # parse instrument OK
+        self.instruments = [self.instruments['Ensoleilé'], self.instruments['Nuageux'],
+                            self.instruments['Brumeux'], self.instruments['Pluvieux'],
+                            self.instruments['Neigeux'], self.instruments['Orageux']]
 
         return [self.city, self.note, self.freq, self.instruments]
