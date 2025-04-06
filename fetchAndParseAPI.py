@@ -37,7 +37,7 @@ def fetch(coordinate=[45, -0.5]):
     return the jsonObject response for the api
     """
     x, y = coordinate 
-    url = f"https://api.open-meteo.com/v1/forecast?latitude={x}&longitude={y}&minutely_15=temperature_2m,weather_code,precipitation,wind_speed_10m,direct_radiation,visibility"
+    url = f"https://api.open-meteo.com/v1/forecast?latitude={x}&longitude={y}&minutely_15=temperature_2m,weather_code,precipitation,wind_speed_10m,direct_radiation,visibility&forecast_days=1"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
