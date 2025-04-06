@@ -4,7 +4,8 @@ from playsound import playsound
 import speech_recognition as sr
 from interface import Application
 from fetchAndParseAPI import *
-
+from transformeWeatherToMusic import *
+from generateMidi import *
 
 def response(string):
     recognizer = sr.Recognizer()
@@ -46,6 +47,9 @@ def main():
         playsound("ville.mp3")
         city = response("Dites le nom de la ville voulue")
         coord = convert_city_to_coordinate(city)
+        first_note = 0
+        freq, list_instruments = default_settings()
+
 
     
         
@@ -56,9 +60,10 @@ def main():
     playsound("traitement.mp3")
 
 
-    #partie 3 - cherches les information sur l'api =======================================================
-    json_weather = fetch(coord)
+    #partie 3 - cherches les informations sur l'api =======================================================
+    json = fetch(coord)
     temp = get_temperature(json)
+    condi = get_weather_conditions(json)
     wind = get_wind_speed(json)
     rainfall = get_rainfall(json)
     radiation = get_radiation(json)
@@ -67,15 +72,23 @@ def main():
 
     #partie 4 - analyse des données ======================================================================
     melody = convert_temperature(temp, first_note, (personalize.lower() == "oui"))
-    melody = add_harmonics_every_3hours(melody)
-    duration_melody = duration(melody)
-    #instruments =
-    #sub_melody =
-    #sub_duration_melody = 
-    
+
+    #duration of main melody
+    melody_duration = duration(melody)
+    print("duration_melody : ", melody_duration)
+
+    # main melody
+    final_melody = temperature_and_chord(melody, melody_duration)
+    print("final_melody : ", final_melody)
+
+
+    #accompagning melody
+    instruments, accompagning  = convert_condition (condi,list_instruments)
+    accompagning_duration = condition_duration(melody, condi, rainfall, wind, visibility, radiation)
+
 
     #partie 5 - génération du fichier MIDI ===============================================================
-    generate_midi_file(melody, duration_melody, accompaning, duration_accompaning, accompaning_instrument_nb)
+    generate_midi(final_melody, melody_duration, accompagning, accompagning_duration, instruments, "weather.mid")
     
 
 
