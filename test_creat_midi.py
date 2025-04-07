@@ -19,5 +19,7 @@ duration_accomp =  [0.3333333333333333, 0.5, 0.5, 0.5, 0.3333333333333333, 0.5, 
 
 
 
+
 generate_midi(final_melody, duration_melody, accompagning, duration_accomp, instrument, freq, "test_midi_once.mid")
     
+# https://api.open-meteo.com/v1/forecast?latitude=44.8404&longitude=-0.5805&hourly=temperature_2m&minutely_15=temperature_2m,precipitation,wind_speed_80m,visibility,direct_radiation&start_date=2025-04-14&end_date=2025-04-14
