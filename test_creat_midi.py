@@ -38,3 +38,22 @@ duration_accomp =  [1, 0.3333333333333333, 0.5, 1, 0.3333333333333333, 0.5, 0.5,
 
 generate_midi(final_melody, duration_melody, accompagning, duration_accomp, instrument, freq, "test_midi_best.mid")
 
+
+#V5 essais mélodie si il fait pleuvieux et nuageux en hiver
+final_melody = [[59,63,66], 61, 63, 64, 66, 68, 70, 71, 66, 68,64, 61, [59,63,66], 64, 70, 59, 66, 66, 64, 59,70, 71, 68, 66, [64,68,71], 63, 61, 59, 59, 61]
+duration_melody = [1, 0.5, 0.5, 0.5, 0.333, 0.5, 1, 0.5, 1, 0.25,0.5, 1, 1, 0.5, 0.5, 0.5, 1, 0.5, 0.5, 1,0.333, 0.5, 0.5, 0.25, 1, 0.5, 0.5, 1, 0.5, 1]
+instrument = [79, 79, 79, 79, 79, 79,13, 13, 13, 13, 13, 13,79, 79, 79, 79, 79, 79,13, 13, 13, 13, 13, 13,79, 79, 79, 79, 79, 79]
+accompagning = [53, 50, 57, 59, 57, 59, 50, 53, 57, 50, 53, 57, 53, 50, 57, 59, 57, 59,50, 53, 57, 50, 53, 57,53, 50, 57, 59, 57, 59]
+duration_accomp = [0.5, 0.5, 0.5, 0.25, 1, 0.5,0.5, 1, 0.5, 0.5, 0.5, 0.25,0.5, 0.5, 0.25, 1, 0.5, 0.5,1, 0.5, 0.5, 0.25, 0.5, 0.5,0.25, 0.5, 1, 0.5, 0.25, 0.5]
+
+generate_midi(final_melody, duration_melody, accompagning, duration_accomp, instrument, freq, "test_midi_hiver_pluie_nuage.mid")
+
+#V6 essais mélodie pliue et orage en automne
+
+duration_melody = [1, 0.5, 1, 0.5, 0.5, 1, 1, 0.333, 0.5, 1, 1, 1, 0.5, 0.5, 0.5, 1, 0.333, 0.5, 1, 0.5]
+final_melody = [[57,61,64], 59, 64, 64, 62, 59, 62, 64, 57, 62, 64, 66, [69,73,76],66, 62, 64, 62, 57, 64, 62]
+instrument = [13,13,13,13,13,13,10,10,10,13,13,13,13,13,13,10,10,10]
+accompagning = [50, 53, 57, 50, 53, 57, 31, 31, 34,50, 53, 57, 53, 57, 50, 31, 31,34]
+duration_accomp = [0.5, 0.5, 1, 0.5, 0.5, 1, 0.5, 0.5, 1, 0.25, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1]
+
+generate_midi(final_melody, duration_melody, accompagning, duration_accomp, instrument, freq, "test_midi_pluie_orage_automne.mid")
