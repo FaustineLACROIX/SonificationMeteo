@@ -341,9 +341,6 @@ class Application(tk.Tk):
         """
         # Liste des notes
         notes = [
-            "La",
-            "La#",
-            "Si",
             "Do",
             "Do#",
             "Re",
@@ -353,6 +350,9 @@ class Application(tk.Tk):
             "Fa#",
             "Sol",
             "Sol#",
+            "La",
+            "La#",
+            "Si",
         ]
 
         # Dictionnaire de conversion note -> numéro MIDI
@@ -361,7 +361,7 @@ class Application(tk.Tk):
         # Génération dynamique des correspondances
         for midi_num in range(0, 128):
             note_index = midi_num % 12
-            octave = (midi_num // 12) - 5
+            octave = (midi_num // 12) - 1
 
             note_name = f"{notes[note_index]}{octave}"
             note_to_midi[note_name] = midi_num
