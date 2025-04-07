@@ -22,16 +22,16 @@ melody = convert_temperature(temp, first_note, (personalize.lower() == "oui"))
 
 #duration of main melody
 melody_duration = duration(melody)
-print("duration_melody : ", melody_duration)
+print("duration_melody = ", melody_duration)
 
 # main melody
 final_melody = temperature_and_chord(melody, melody_duration)
-print("final_melody : ", final_melody)
+print("final_melody = ", final_melody)
 
 
 #accompagning melody
 instruments, accompagning  = convert_condition (condi,list_instruments)
-print("instrument : ", instruments)
-print("accompagnement :", accompagning)
+print("instrument = ", instruments)
+print("accompagning =", accompagning)
 accompagning_duration = condition_duration(melody, condi, rainfall, wind, visibility, radiation)
-print("duration_accomp : ", accompagning_duration)
+print("duration_accomp = ", accompagning_duration)

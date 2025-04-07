@@ -327,7 +327,7 @@ def create_chord(note):
     generate one chord with the note composed of 5 note
     param : note of the based of the chord
     '''
-    intervals = [0, 2, 4]
+    intervals = [0, 4, 7, 10, 14]
     chord = []
     for i in intervals:
         chord.append(note + i)
@@ -351,13 +351,13 @@ def temperature_and_chord(list_temp, duration_list):
      
         # ajout des notes 
         else:
-            #if duration_list[j] < 1:
-            #    for _ in range(int(1/duration_list[j])):
-            #        list_temp_final.append(list_temp[i])
-            #    j += int(1/duration_list[j])
-            #else:
-            list_temp_final.append(list_temp[i]) 
-            #   j += 1
+            if duration_list[j] < 1:
+                for _ in range(int(1/duration_list[j])):
+                    list_temp_final.append(list_temp[i])
+                j += int(1/duration_list[j])
+            else:
+                list_temp_final.append(list_temp[i]) 
+                j += 1
          
 
     return list_temp_final
@@ -379,9 +379,9 @@ def duration(list_temp):
         #noir ou plus rapide répété pour que tous dure 1h    
         else:
             note_choose = rd.choices( note_duration, weights=[0, 0, 60, 28, 11, 1, 0, 0 ], k=1)
-            #for _ in range (int(1/note_choose[0])):
-            #    duration_list.append(note_choose[0])
-            duration_list.append(note_choose[0])
+            for _ in range (int(1/note_choose[0])):
+                duration_list.append(note_choose[0])
+            #duration_list.append(note_choose[0])
 
     return duration_list
                 
