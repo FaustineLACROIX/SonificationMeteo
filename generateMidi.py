@@ -14,7 +14,7 @@ def generate_midi(melody, melody_duration, accompagning,
     beat_resol = midi_obj.ticks_per_beat
 
     # Create a track for the piano
-    piano_track = ct.Instrument(program=0, is_drum=False, name='Piano')
+    piano_track = ct.Instrument(program=24, is_drum=False, name='Piano')
     instrument_tracks = {}  # Dictionary to store tracks by instrument
 
     # Current time (not playing the next note before or during the current)
