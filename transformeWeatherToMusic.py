@@ -10,10 +10,10 @@ wind_list = []
 
 
 # ========== DATA FOR MUSIC =======================
-scale_winter = 47 # scale  ]-inf;5] Si
-scale_autumn = 45 # scale  ]5;12] La 
-scale_spring = 74 # scale  ]12;24] Re
-scale_summer = 79 # scale  ]24;+inf] Sol
+scale_winter = 59 # scale  ]-inf;5] Si
+scale_autumn = 57 # scale  ]5;12] La 
+scale_spring = 62 # scale  ]12;24] Re
+scale_summer = 67 # scale  ]24;+inf] Sol
 list_majeur = [2, 2, 1, 2, 2, 2, 1]
 
 note_duration = [4, 2, 1, 0.5, (1/3), 0.25, 0.125, 0.0625] #ronde, blanche, noire, croche, triollet, double croche, triple croche, quadruple croche
@@ -119,7 +119,7 @@ def create_condition_melody(condition):
 
     elif (condition == "Nuageux"):
         # ocrina 79
-        list_note = [55, 57, 60, 62, 65, 67]
+        list_note = [53, 50, 57, 59, 57, 59]
      
     elif (condition == "Brumeux"):
         # trombone 58
@@ -127,15 +127,15 @@ def create_condition_melody(condition):
 
     elif (condition == "Pluvieux"):
         # xylophone 13
-        list_note = [45, 47, 50, 52, 54, 57]
+        list_note = [50, 53, 57, 50, 53, 57]
 
     elif (condition == "Neigeux"):
         # harpe 46
-        list_note = [40, 42, 45, 47, 50, 52]
+        list_note = [83, 76, 79, 83, 74, 79]
 
     else:
         # timpani 47
-        list_note = [35, 37, 40, 42, 45, 47]
+        list_note = [31, 31, 34, 31, 31, 34]
         
     # retourne tab de 6 notes/accords 
     return list_note
@@ -317,7 +317,17 @@ def convert_radiation(list_radiation):
     return list_duration
 
 
+# 3.5)SPEED OF STORM
+def convert_storm(list_rainfall):
+    list_duration = []
 
+    for i in range(int(len(list_rainfall)/3)):
+        list_duration.append(0.5)
+        list_duration.append(0.5)
+        list_duration.append(1)
+
+
+    return list_duration
 
 #5) CHORD LINK TO A NOTE =====================================================
 # 
@@ -402,7 +412,7 @@ def condition_duration(list_note, list_condi, data_rainfall, data_wind, data_vis
     list_visibility = convert_visibility(data_visibility)
     list_rainfall = convert_rainfall(data_rainfall)
     list_snow = convert_rainfall(data_rainfall)
-    list_storm = convert_rainfall(data_rainfall)
+    list_storm = convert_storm(data_rainfall)
 
 
     for i in range(len(list_note)):
