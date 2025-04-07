@@ -1,5 +1,6 @@
 from fetchAndParseAPI import *
 from transformeWeatherToMusic import *
+from generateMidi import *
 
 city = "bordeaux"
 coord = convert_city_to_coordinate(city)
@@ -27,11 +28,11 @@ print("duration_melody = ", melody_duration)
 final_melody = temperature_and_chord(melody, melody_duration)
 print("final_melody = ", final_melody)
 
-
-
 #accompagning melody
 instruments, accompagning  = convert_condition (condi,list_instruments)
 print("instrument = ", instruments)
 print("accompagning =", accompagning)
 accompagning_duration = condition_duration(melody, condi, rainfall, wind, visibility, radiation)
 print("duration_accomp = ", accompagning_duration)
+
+generate_midi(final_melody, melody_duration, accompagning, accompagning_duration, instruments, freq, "test_base.mid")
