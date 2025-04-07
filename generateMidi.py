@@ -52,7 +52,7 @@ def generate_midi(melody, melody_duration, accompagning,
             instrument_tracks[instr] = ct.Instrument(program=instr, is_drum=False, name=f'Instrument_{instr}')
 
         # Add note to the correct instrument track
-        instrument_tracks[instr].notes.append(ct.Note(start=current_time, end=current_time + duration, pitch=note, velocity=15))
+        instrument_tracks[instr].notes.append(ct.Note(start=current_time, end=current_time + duration, pitch=note, velocity=50))
         current_time += duration  
 
     # Add track to the final midi_obj

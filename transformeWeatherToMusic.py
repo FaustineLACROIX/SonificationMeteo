@@ -22,7 +22,7 @@ note_duration = [4, 2, 1, 0.5, (1/3), 0.25, 0.125, 0.0625] #ronde, blanche, noir
 # ========== DEFAULT SETTINGS ===================
 def default_settings():
     freq = 1
-    list_instruments = [40, 79, 58, 13, 46, 47]
+    list_instruments = [40, 121, 58, 13, 46, 47]
     return freq, list_instruments
 
 
@@ -118,8 +118,10 @@ def create_condition_melody(condition):
         list_note = [60, 62, 64, 67, 69, 71]
 
     elif (condition == "Nuageux"):
-        # ocrina 79
+        # ocrina 79 X 121 
         list_note = [53, 50, 57, 59, 57, 59]
+        #list_note = [55, 57, 60, 57, 60, 62]
+
      
     elif (condition == "Brumeux"):
         # trombone 58
@@ -337,7 +339,7 @@ def create_chord(note):
     generate one chord with the note composed of 5 note
     param : note of the based of the chord
     '''
-    intervals = [0, 4, 7, 10, 14]
+    intervals = [0, 4, 7]
     chord = []
     for i in intervals:
         chord.append(note + i)
@@ -361,13 +363,13 @@ def temperature_and_chord(list_temp, duration_list):
      
         # ajout des notes 
         else:
-            if duration_list[j] < 1:
-                for _ in range(int(1/duration_list[j])):
-                    list_temp_final.append(list_temp[i])
-                j += int(1/duration_list[j])
-            else:
-                list_temp_final.append(list_temp[i]) 
-                j += 1
+            #if duration_list[j] < 1:
+            #    for _ in range(int(1/duration_list[j])):
+            #        list_temp_final.append(list_temp[i])
+            #    j += int(1/duration_list[j])
+            #else:
+            list_temp_final.append(list_temp[i]) 
+            #    j += 1
          
 
     return list_temp_final
@@ -385,13 +387,13 @@ def duration(list_temp):
     for i in range(len(list_temp)):
         # blanche lors des accords tous les 3h
         if (i%(12) == 0):
-            duration_list.append(note_duration[1])
+            duration_list.append(note_duration[2])
         #noir ou plus rapide répété pour que tous dure 1h    
         else:
             note_choose = rd.choices( note_duration, weights=[0, 0, 60, 28, 11, 1, 0, 0 ], k=1)
-            for _ in range (int(1/note_choose[0])):
-                duration_list.append(note_choose[0])
-            #duration_list.append(note_choose[0])
+            #for _ in range (int(1/note_choose[0])):
+            #    duration_list.append(note_choose[0])
+            duration_list.append(note_choose[0])
 
     return duration_list
                 
