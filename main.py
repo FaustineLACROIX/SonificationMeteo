@@ -75,20 +75,22 @@ def main():
 
     #duration of main melody
     melody_duration = duration(melody)
-    print("duration_melody : ", melody_duration)
+    print("duration_melody = ", melody_duration)
 
     # main melody
     final_melody = temperature_and_chord(melody, melody_duration)
-    print("final_melody : ", final_melody)
+    print("final_melody = ", final_melody)
 
 
     #accompagning melody
     instruments, accompagning  = convert_condition (condi,list_instruments)
+    print("instrument = ", instruments)
+    print("accompagning =", accompagning)
     accompagning_duration = condition_duration(melody, condi, rainfall, wind, visibility, radiation)
-
+    print("duration_accomp = ", accompagning_duration)
 
     #partie 5 - génération du fichier MIDI ===============================================================
-    generate_midi(final_melody, melody_duration, accompagning, accompagning_duration, instruments, "weather.mid")
+    generate_midi(final_melody, melody_duration, accompagning, accompagning_duration, instruments, freq, "weather.mid")
     
 
 
