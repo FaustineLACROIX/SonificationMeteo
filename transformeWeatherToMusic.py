@@ -22,7 +22,7 @@ note_duration = [4, 2, 1, 0.5, (1/3), 0.25, 0.125, 0.0625] #ronde, blanche, noir
 # ========== DEFAULT SETTINGS ===================
 def default_settings():
     freq = 1
-    list_instruments = [40, 121, 58, 13, 46, 47]
+    list_instruments = [40, 121, 44, 13, 46, 47]
     return freq, list_instruments
 
 
@@ -125,7 +125,7 @@ def create_condition_melody(condition):
      
     elif (condition == "Brumeux"):
         # trombone 58
-        list_note = [36, 38, 41, 43, 46, 48]
+        list_note = [36, 38, 43, 38, 41, 36]
 
     elif (condition == "Pluvieux"):
         # xylophone 13
@@ -321,6 +321,11 @@ def convert_radiation(list_radiation):
 
 # 3.5)SPEED OF STORM
 def convert_storm(list_rainfall):
+    '''
+    (intern called)
+    generate list of duration for strom
+    param : no very important juste need size
+    '''
     list_duration = []
 
     for i in range(int(len(list_rainfall)/3)):
