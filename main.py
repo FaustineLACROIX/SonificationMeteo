@@ -8,6 +8,9 @@ from transformeWeatherToMusic import *
 from generateMidi import *
 
 def response(string):
+    '''
+    fonction annexe qui écrit ce qui est dit à l'oral
+    '''
     recognizer = sr.Recognizer()
     with sr.Microphone() as source:
         print(string)
@@ -25,8 +28,7 @@ def response(string):
 
 def main():
     # partie 1 - introduction et ville souhaité ==========================================================
-    text_intro = "Bonjour"
-    suit =", je suis votre assistante Musical Weather. Mon but est de vous guidé pour crée une musique qui exprime la météo du jour. Voulez-vous personalisé cette musique?"
+    text_intro = "Bonjour, je suis votre assistante Musical Weather. Mon but est de vous guidé pour crée une musique qui exprime la météo du jour. Voulez-vous personalisé cette musique?"
     tts = gTTS(text=text_intro, lang='fr')
     tts.save("introduction.mp3")
     playsound("introduction.mp3")
@@ -71,7 +73,7 @@ def main():
 
 
     #partie 4 - analyse des données ======================================================================
-    melody = convert_temperature(temp, first_note, (personalize.lower() == "oui"))
+    melody = convert_temperature(temp, first_note, (personalize == "oui"))
 
     #duration of main melody
     melody_duration = duration(melody)
@@ -90,7 +92,7 @@ def main():
     print("duration_accomp = ", accompagning_duration)
 
     #partie 5 - génération du fichier MIDI ===============================================================
-    generate_midi(final_melody, melody_duration, accompagning, accompagning_duration, instruments, freq, "weather.mid")
+    generate_midi(final_melody, melody_duration, accompagning, accompagning_duration, instruments, freq, f"weather_{city}.mid")
     
 
 

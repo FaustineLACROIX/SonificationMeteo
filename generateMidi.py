@@ -23,19 +23,14 @@ def generate_midi(melody, melody_duration, accompagning,
     # Play temperature notes with the piano
     for i in range(int(len(melody)/freq)):
         note = melody[i*freq]
-        #print("note",note)
         duration = int(beat_resol * melody_duration[i*freq])
-        #print("duration",duration)
 
         if isinstance(note, list):
             for sub in note:
-                #print("sub:", sub, type(sub))  # Debug
                 piano_track.notes.append(ct.Note(start=current_time, end=current_time + duration, pitch=int(sub), velocity=100))
         else:
-            #print("note:", note, type(note))  # Debug
             piano_track.notes.append(ct.Note(start=current_time, end=current_time + duration, pitch=int(note), velocity=90))
-        current_time += duration 
-        #print("current_time",current_time) 
+        current_time += duration  
 
 
     # Reset time to start from 0 for condition notes
@@ -58,13 +53,6 @@ def generate_midi(melody, melody_duration, accompagning,
     # Add track to the final midi_obj
     midi_obj.instruments.append(piano_track)
     midi_obj.instruments.extend(instrument_tracks.values())
-
-
-    # Debug avant d'appeler midi_obj.dump()
-    #print("Instruments:", midi_obj.instruments)
-    #for instrument in midi_obj.instruments:
-    #    for note in instrument.notes:
-    #        print(f"Note: {note.pitch}, Start: {note.start}, End: {note.end}, Velocity: {note.velocity}")
 
     # Save the generated MIDI file
     midi_obj.dump(title)

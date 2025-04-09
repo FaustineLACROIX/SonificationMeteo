@@ -77,7 +77,7 @@ class Application(tk.Tk):
             "Entrez le nom d'une ville valide, sans majuscule (ex: bordeaux)",
         ).pack(side=tk.RIGHT, padx=5)
 
-        # --- CHAMP DE SAISIE : NOTE ---
+        # --- CHAMP DE SAISIE : ---
         frame_note = tk.Frame(self)
         frame_note.pack(fill=tk.X, padx=10, pady=10)  # Ajout d'espace
         note_label = tk.Label(frame_note, text="Note de départ :", width=25, anchor="w")
@@ -123,7 +123,7 @@ class Application(tk.Tk):
             "Neigeux",
             "Orageux",
         ]
-        self.instruments_list = [
+        self.instruments_list = ["none",
             "Piano acoustique",
             "Piano électrique 1",
             "Piano électrique 2",
@@ -267,11 +267,11 @@ class Application(tk.Tk):
             if weather == "Ensoleilé":
                 default_instrument = "Violoncelle"
             elif weather == "Nuageux":
-                default_instrument = "Ocarina"
+                default_instrument = "Effet pluie"
             elif weather == "Brumeux":
-                default_instrument = "Crystal"
+                default_instrument = "Tremolo Strings"
             elif weather == "Pluvieux":
-                default_instrument = "Synth Pad 6 (Metal)"
+                default_instrument = "Marimba"
             elif weather == "Neigeux":
                 default_instrument = "Harpe"
             else:

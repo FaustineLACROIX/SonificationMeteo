@@ -22,7 +22,7 @@ note_duration = [4, 2, 1, 0.5, (1/3), 0.25, 0.125, 0.0625] #ronde, blanche, noir
 # ========== DEFAULT SETTINGS ===================
 def default_settings():
     freq = 1
-    list_instruments = [40, 121, 44, 13, 46, 47]
+    list_instruments = [41, 121, 44, 13, 46, 47]
     return freq, list_instruments
 
 
@@ -38,11 +38,10 @@ def generate_scale(scale, list):
         res.append(current_note)
     return res
 
-## TESTS
+#------- TEST ---------
 # print(generate_scale(60,list_majeur))
  
 
-# find the closest value in the list
 def find_closest_value(val, lst):
     '''
     find the closest value of va in the list
@@ -50,7 +49,7 @@ def find_closest_value(val, lst):
     return min(lst, key=lambda x: abs(x - val))
 
 # 1) TEMPERATURE TO SCALE ====================================================
-#  
+  
 def convert_temperature(list_temp, note, isPersonalized):
     '''
     (called by main) generate list of basique scale
@@ -100,13 +99,14 @@ def convert_temperature(list_temp, note, isPersonalized):
 
     return list_scale
 
+#------- TEST ---------
 #temperature_list = [0, 7, 15, 28, 10, 20, 25, 2]
 #print ("moyenne =", (0+7+15+28+10+20+25+2)/8, ">12 donc gamme automne")
 #notes = convert_temperature(temperature_list)
 #print(notes)
 
 #2) CONDITION TO ADD AN OTHER INSTRUMENT =====================================
-# Create the 6 note mélodie 
+
 def create_condition_melody(condition):
     '''
     Create the 6 note melody for accompagning
@@ -114,17 +114,16 @@ def create_condition_melody(condition):
     '''
     list_note = []
     if (condition == "Ensoleilé"):
-        # violon
+        # alto 41
         list_note = [60, 62, 64, 67, 69, 71]
 
     elif (condition == "Nuageux"):
-        # ocrina 79 X 121 
+        # ocrina 121 
         list_note = [53, 50, 57, 59, 57, 59]
         #list_note = [55, 57, 60, 57, 60, 62]
 
-     
     elif (condition == "Brumeux"):
-        # trombone 58
+        # Tremolo Strings 44
         list_note = [36, 38, 43, 38, 41, 36]
 
     elif (condition == "Pluvieux"):
@@ -227,7 +226,7 @@ def convert_rainfall(list_rainfall):
 
 
 # 3.2) WIND TO SPEED OF CLOUD
-#  
+ 
 def convert_wind(list_wind):
     '''
     (intern called)
@@ -337,7 +336,7 @@ def convert_storm(list_rainfall):
     return list_duration
 
 #5) CHORD LINK TO A NOTE =====================================================
-# 
+ 
 def create_chord(note):
     '''
     (intern called)
@@ -351,7 +350,7 @@ def create_chord(note):
     return chord
 
 #6) EVERY 3HOURS MAKE A CHORD ================================================
-# Mettre la liste des notes avec l'accord tous les 3h 
+
 def temperature_and_chord(list_temp, duration_list):
     '''
     (called by main)
@@ -368,20 +367,14 @@ def temperature_and_chord(list_temp, duration_list):
      
         # ajout des notes 
         else:
-            #if duration_list[j] < 1:
-            #    for _ in range(int(1/duration_list[j])):
-            #        list_temp_final.append(list_temp[i])
-            #    j += int(1/duration_list[j])
-            #else:
             list_temp_final.append(list_temp[i]) 
-            #    j += 1
+
          
 
     return list_temp_final
 
 #7) CHOOSE DURATION =========================================================
-# durée :  pas de blanche et ronde et si croche ou autre note répétter pour
-# faire le temps d'une noire pour la température 
+
 def duration(list_temp):
     '''
     (called by main)
@@ -390,14 +383,11 @@ def duration(list_temp):
     '''
     duration_list = [] 
     for i in range(len(list_temp)):
-        # blanche lors des accords tous les 3h
+        # noir lors des accords tous les 3h
         if (i%(12) == 0):
-            duration_list.append(note_duration[2])
-        #noir ou plus rapide répété pour que tous dure 1h    
+            duration_list.append(note_duration[2])  
         else:
             note_choose = rd.choices( note_duration, weights=[0, 0, 60, 28, 11, 1, 0, 0 ], k=1)
-            #for _ in range (int(1/note_choose[0])):
-            #    duration_list.append(note_choose[0])
             duration_list.append(note_choose[0])
 
     return duration_list
