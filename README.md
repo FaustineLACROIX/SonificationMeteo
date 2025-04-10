@@ -13,15 +13,17 @@ Pour exécuter le projet il faut télécharger les bibliothèques suivantes:
 - speech_recognition
 
   Vous pouvez faire (conseil: installer tout dans un venv):
+  
   ```pip install numpy requests playsound gTTS SpeechRecognition```
 
 
 ## Lancer le projet
 
-explications: Notre projet a une interface sonore, cependant on peut aussi personnaliser le résultat ce qui ouvre une interface graphique
+explications: Notre projet a une interface sonore, cependant on peut aussi personnaliser le résultat ce qui ouvre une interface graphique:
+
 ```python3 main.py```
 
-# Interagir dasn le main
+## Interagir dans le main
 
 La première question est:
 "Est ce que vous voulez personnaliser l'audio final ?"
